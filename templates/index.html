@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Demo</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
@@ -56,9 +56,9 @@
                 password: document.getElementById('signup-password').value,
             };
 
-            if (!data.username || !data.email || !data.password.length < 6) {
+            if (!data.username || !data.email || data.password.length < 6) {
                 msg.textContent = 'Please fill in all the fields (password >= 6 chars).';
-                msg.className('msg-error');
+                msg.className = 'msg-error';
                 return;
             }
 
@@ -84,7 +84,7 @@
             const msg = document.getElementById('login-msg');
             const data = {
                 username: document.getElementById('login-username').value.trim(),
-                password: document.getElementById('login-password').value(),
+                password: document.getElementById('login-password').value,
             };
 
             if (!data.username || !data.password){
