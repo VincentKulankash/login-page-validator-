@@ -4,7 +4,7 @@ from flask_restful import Api, reqparse, Resource, marshal_with, fields, abort
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite///users.db'
+app.config ['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
 api = Api(app)
 
@@ -42,7 +42,7 @@ class Signup (Resource):
         args = signup_args.parse_args()
 
         if len(args['password']) < 6:
-            abort (400, message= 'Invalid email address')
+            abort (400, message= 'Password must be at least 6 characters')
 
         if UserModel.query.filter_by(username=args['username']).first():
             abort (409, message='Username already taken')
@@ -83,7 +83,7 @@ class UserProfile (Resource):
 
 api.add_resource(Signup, '/api/signup')
 api.add_resource(Login, '/api/login')
-api.add_resource(UserProfile, '/api/users/<user_id>')
+api.add_resource(UserProfile, '/api/users/int:<user_id>')
 
 @app.route('/')
 def home ():
